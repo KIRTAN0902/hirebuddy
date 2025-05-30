@@ -1,0 +1,32 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environment
+venv/
+env/
+ENV/
+.venv/
+
+# SQLite database
+*.db
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# VS Code settings
+.vscode/
+
+# Python egg files
+*.egg
+*.egg-info/
+dist/
+build/
+
+# Logs
+*.log
+
+# Node modules (if any frontend tooling)
+node_modules/

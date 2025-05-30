@@ -1,3 +1,4 @@
 Flask
+Flask CORS
 gunicorn
 # ...add any other dependencies your app uses...
