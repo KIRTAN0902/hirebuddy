@@ -270,7 +270,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function searchJobs(keyword) {
-    fetch(`http://localhost:5000/search?role=${encodeURIComponent(keyword)}`)
+    fetch(`https://hirebuddy-6ncf.onrender.com/search?role=${encodeURIComponent(keyword)}`)
       .then(response => response.json())
       .then(jobs => {
         renderJobs(jobs);
