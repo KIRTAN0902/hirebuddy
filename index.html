@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Hirebuddy Job Board</title>
+  
+  <!-- Modern Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=Manrope:wght@400;700;900&family=Poppins:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css" />
+
+  <style>
+    .slider-container {
+      width: 100vw;
+      max-width: 100vw;
+      margin: 0;
+      padding: 0;
+      background: linear-gradient(to bottom, #ffffff00, #f8f8ff);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      border: none;
+      box-shadow: none;
+      min-height: 0;
+    }
+    .slider-text {
+      margin: 0;
+      padding: 0;
+      font-family: 'Inter', 'Poppins', sans-serif;
+      font-size: clamp(1.5rem, 3vw, 2rem);
+      font-weight: 700;
+      color: #3730a3;
+      line-height: 1.4;
+      text-align: center;
+      background: none;
+      border: none;
+      letter-spacing: 0.01em;
+      white-space: pre-line;
+      min-height: 2.2em;
+      opacity: 0;
+      animation: sliderFadeUp 0.7s cubic-bezier(.4,0,.2,1) forwards;
+      will-change: opacity, transform;
+      transition: color 0.2s, font-size 0.2s;
+    }
+    @keyframes sliderFadeUp {
+      from {
+        opacity: 0;
+        transform: translateY(32px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    .slider-text.hide {
+      opacity: 0 !important;
+      animation: none !important;
+    }
+    @media (max-width: 900px) {
+      .slider-text {
+        font-size: 1.15rem;
+      }
+    }
+    @media (max-width: 600px) {
+      .slider-text {
+        font-size: 0.97rem;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Navigation Bar -->
+  <nav class="navbar">
+    <button class="hamburger" id="hamburger-btn" aria-label="Open navigation">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+    <div class="nav-logo">
+      <img src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" alt="Hirebuddy Logo" />
+      <span>Hirebuddy</span>
+    </div>
+    <div class="nav-links">
+      <a href="#">Features</a>
+      <a href="#">Resume AI</a>
+      <a href="#">For Employers</a>
+      <a href="#">About</a>
+      <a href="#">Blog</a>
+    </div>
+    <div class="nav-actions">
+      <button class="nav-signin">Sign In</button>
+      <button class="nav-join">Join Now</button>
+    </div>
+  </nav>
+
+  <!-- Slideshow -->
+  <div class="slideshow-container" id="slideshow">
+    <img src="https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=1200&q=80" class="slide active" alt="Teamwork" />
+    <img src="https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&w=1200&q=80" class="slide" alt="Coding" />
+    <img src="https://images.unsplash.com/photo-1461749280684-dccba630e2f6?auto=format&fit=crop&w=1200&q=80" class="slide" alt="Office" />
+    <img src="https://plus.unsplash.com/premium_photo-1684769160411-ab16f414d1bc?q=80&w=2926&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" class="slide" alt="Interview" />
+    <div class="slideshow-dots" id="slideshow-dots"></div>
+  </div>
+
+  <!-- Modern Animated Text Slider -->
+  <div class="slider-container">
+    <span class="slider-text" id="sliderText"></span>
+  </div>
+
+  <main>
+    <!-- Job Listings Section -->
+    <section id="job-results">
+      <div class="search-bar-row">
+        <input type="text" id="jobSearchInput" placeholder="Search jobs for your matched role..." autocomplete="off" />
+      </div>
+      <button class="search-btn" id="job-search-btn" type="button">Search</button>
+      <ul id="keyword-stats-list" style="display:none"></ul>
+      <div class="job-results-title" id="job-results-title"></div>
+      <div id="job-listings"></div>
+    </section>
+
+    <!-- Resume Upload Section -->
+    <section id="resume-upload">
+      <div class="welcome">Welcome to Hirebuddy</div>
+      <label for="resume-upload-input">
+        <div class="upload-box" title="Click to upload your resume">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 48 48" width="48" height="48">
+            <path d="M24 34V14M24 14l-8 8M24 14l8 8"/>
+          </svg>
+        </div>
+      </label>
+      <input id="resume-upload-input" type="file" accept=".pdf,.doc,.docx,.txt" hidden />
+      <div class="upload-label">Upload Resume</div>
+      <div class="upload-helper">Accepted: PDF, DOCX, TXT</div>
+      <button class="upload-btn" type="button">Upload Resume</button>     
+      <div id="predicted-role" style="display:none;">
+        <span class="predicted-role-badge"><span id="role-name"></span></span>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>© 2025 Hirebuddy | Made with ❤️</p>
+  </footer>
+
+  <!-- Hamburger menu JS -->
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+      const hamburger = document.getElementById("hamburger-btn");
+      const navLinks = document.querySelector(".nav-links");
+      hamburger.addEventListener("click", () => {
+        navLinks.classList.toggle("open");
+        hamburger.classList.toggle("open");
+      });
+    });
+  </script>
+
+  <!-- Slideshow Script -->
+  <script>
+    const slides = document.querySelectorAll('.slide');
+    const dotsContainer = document.getElementById('slideshow-dots');
+    let currentSlide = 0;
+    let slideInterval;
+
+    function showSlide(index) {
+      slides.forEach((slide, i) => {
+        slide.classList.toggle('active', i === index);
+        dotsContainer.children[i]?.classList.toggle('active', i === index);
+      });
+      currentSlide = index;
+    }
+
+    function nextSlide() {
+      showSlide((currentSlide + 1) % slides.length);
+    }
+
+    // Create dots
+    slides.forEach((_, index) => {
+      const dot = document.createElement('button');
+      dot.className = 'slideshow-dot' + (index === 0 ? ' active' : '');
+      dot.setAttribute('aria-label', `Go to slide ${index + 1}`);
+      dot.onclick = () => {
+        showSlide(index);
+        resetInterval();
+      };
+      dotsContainer.appendChild(dot);
+    });
+
+    function resetInterval() {
+      clearInterval(slideInterval);
+      slideInterval = setInterval(nextSlide, 3500);
+    }
+
+    resetInterval();
+
+    document.getElementById('slideshow').addEventListener('mouseenter', () => clearInterval(slideInterval));
+    document.getElementById('slideshow').addEventListener('mouseleave', resetInterval);
+
+    // Scroll navbar style change
+    window.addEventListener('scroll', () => {
+      const navbar = document.querySelector('.navbar');
+      navbar.classList.toggle('scrolled', window.scrollY > 40);
+    });
+  </script>
+
+  <!-- Animated Text Slider Script -->
+  <script>
+    const sliderPhrases = [
+      "Search, Match, Apply — Effortlessly",
+      "Let AI Guide Your Job Hunt",
+      "Tailored Opportunities, Real Results"
+    ];
+    const sliderText = document.getElementById('sliderText');
+    let sliderIndex = 0;
+
+    function showSliderText(idx) {
+      if (!sliderText) return;
+      sliderText.classList.add('hide');
+      setTimeout(() => {
+        sliderText.textContent = sliderPhrases[idx];
+        sliderText.classList.remove('hide');
+        sliderText.style.animation = 'none';
+        // Force reflow for restart animation
+        void sliderText.offsetWidth;
+        sliderText.style.animation = null;
+      }, 350);
+    }
+
+    function nextSliderText() {
+      sliderIndex = (sliderIndex + 1) % sliderPhrases.length;
+      showSliderText(sliderIndex);
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      showSliderText(sliderIndex);
+      setInterval(nextSliderText, 2500);
+    });
+  </script>
+
+  <!-- PDF.js -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.4.120/pdf.min.js"></script>
+
+  <!-- Mammoth.js -->
+  <script src="https://unpkg.com/mammoth/mammoth.browser.min.js"></script>
+
+  <!-- Backend integration and job logic -->
+  <script src="script.js"></script>
+</body>
+</html>

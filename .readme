@@ -1,0 +1,119 @@
+# Hirebuddy Job Board
+
+A modern job board web application with AI-powered resume features, built using Flask (Python) for the backend and HTML/CSS/JS for the frontend.
+
+---
+
+## Features
+
+- **Job Search:** Search and filter jobs by title or description.
+- **Responsive UI:** Clean, mobile-friendly design.
+- **Slideshow Banner:** Eye-catching image slider at the top.
+- **AI Resume Tools:** (Planned/Optional) Integrate AI for resume parsing or suggestions.
+- **Easy Apply:** Direct application links for jobs.
+- **Full-Text Search:** Fast job search using SQLite FTS.
+
+---
+
+## Tech Stack
+
+- **Frontend:** HTML, CSS, JavaScript
+- **Backend:** Python, Flask, SQLite
+- **Deployment:**  
+  - Frontend: [Vercel](https://vercel.com) or [Netlify](https://netlify.com)  
+  - Backend: [Render](https://render.com), [Railway](https://railway.app), [Fly.io](https://fly.io), or [Heroku](https://heroku.com)
+
+---
+
+## Getting Started
+
+### Prerequisites
+
+- Python 3.8+
+- pip
+
+### Setup
+
+1. **Clone the repository:**
+    ```sh
+    git clone https://github.com/yourusername/hirebuddy-job-board.git
+    cd hirebuddy-job-board
+    ```
+
+2. **Install dependencies:**
+    ```sh
+    pip install -r server/requirements.txt
+    ```
+
+3. **Run the backend (Flask API):**
+    ```sh
+    cd server
+    python app.py
+    ```
+    The API will be live at `http://localhost:5000`.
+
+4. **Open the frontend:**
+    - Open `index.html` in your browser, or serve with a static server.
+
+---
+
+## Deployment
+
+### Frontend
+
+- Deploy the `index.html`, `styles.css`, and other static files to [Vercel](https://vercel.com) or [Netlify](https://netlify.com).
+
+### Backend
+
+- **Recommended:** Deploy `server/app.py` and `jobs.db` to [Railway](https://railway.app).
+    1. Go to [Railway](https://railway.app) and create a new project.
+    2. Connect your GitHub repository or upload your code.
+    3. Set the working directory to `server/` in Railway project settings.
+    4. Set the start command to `python app.py`.
+    5. Add any required environment variables (e.g., for database paths or API keys).
+    6. Deploy the project; Railway will provide a public URL for your Flask API.
+
+- **Alternative:** You can also deploy to [Render](https://render.com), [Fly.io](https://fly.io), or [Heroku](https://heroku.com) if preferred.
+
+---
+
+## Environment Variables
+
+- If needed, set environment variables for database paths or API keys in your deployment platform.
+
+---
+
+## Project Structure
+
+```
+hirebuddy-job-board/
+│
+├── server/
+│   ├── app.py
+│   ├── jobs.db
+│   └── requirements.txt
+│
+├── index.html
+├── styles.css
+├── script.js
+└── README.md
+```
+
+---
+
+## License
+
+MIT License
+
+---
+
+## Credits
+
+- UI inspired by modern job boards.
+- Built with Flask, SQLite, and open web technologies.
+
+---
+
+## Contact
+
+admin@kirtanshah.space
